@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+</head>
+<body>
+    <form id="reg" action="reg.php">
+        用户名： <input type="text" name="username" id="username"> <br>
+        手机号： <input type="text" name="mobile" id="mobile"> <br>
+        Email： <input type="text" name="email" id="email"> <br>
+        密码： <input type="password" name="pass1" autocomplete=""> <br>
+        确认密码： <input type="password" name="pass2" autocomplete=""> <br>
+        <input type="submit" value="注册">
+    </form>
+
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/reg.js"></script>
+    <script>
+
+        $("#reg").submit(function(ev){
+            ev.preventDefault()
+            var inputs = $("#reg :input").serialize()
+            console.log(inputs)
+
+            $.ajax({
+                method: 'post',      //请求方法
+                url: 'user.php',   //请求的地址
+                dataType: 'json',       // 将服务器返回的json转为 js对象
+                data: inputs           // $_GET['name']
+            }).done(function(d){            // done回调函数  d就是 服务器响应的数据
+                console.log(d)
+            })
+
+        })
+
+
+        $("#username").blur(function(){
+            var self = $(this)
+            var name = $(this).val()          //jquery写法
+            if(name==""){return}
+            //var name = this.value               // 原生 js写法
+            console.log(name)
+            $.ajax({
+                method: 'get',      //请求方法
+                url: 'check.php',   //请求的地址
+                dataType: 'json',       // 将服务器返回的json转为 js对象
+                data: {name:name}           // $_GET['name']
+            }).done(function(d){            // done回调函数  d就是 服务器响应的数据
+                console.log(d)
+                if(d.errno>0)       //异常情况
+                {
+                    alert(d.msg)        //提示错误信息
+                    self.val("")            //input清空
+                    self.focus()            // input 获取焦点
+                }
+            })
+        })
+
+
+    </script>
+</body>
+</html>
