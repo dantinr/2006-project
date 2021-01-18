@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include "pdo.php";
 
     $pdo = getPdo();
@@ -6,7 +7,6 @@
     $sql = "select * from p_rooms";
     $res = $pdo->query($sql);
     $data = $res->fetchAll(PDO::FETCH_ASSOC);
-    //echo '<pre>';print_r($data);echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -17,11 +17,29 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<hr>
-<h1>房间预订</h1>  <span id="time"></span>
-<div id="app">
-    
-    <?php
+
+
+
+
+<div id="container">
+    <div>
+        <?php
+            if(isset($_SESSION['uid'])){
+                echo "<a href=\"logout.php\">退出</a>";
+            }else{
+        ?>
+            <a href="reg.html" target="_blank">注册</a>
+            <a href="login.html" target="_blank">登录</a>
+
+        <?php
+            }
+        ?>
+    </div>
+    <hr>
+    <div id="app">
+        <h1>房间预订</h1>  <span id="time"></span>
+        <hr>
+        <?php
         foreach ($data as $k=>$v){
             $price = $v['price'] / 100 . '.00';
             $id = $v['id'];
@@ -30,9 +48,12 @@
             echo "<h1 class='nickname'>{$v['name']}</h1>";
             echo "</div>";
         }
-    ?>
+        ?>
 
+    </div>
 </div>
+
+
 
 
 <script src="/js/jquery-3.5.1.min.js"></script>
