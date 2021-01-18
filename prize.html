@@ -99,6 +99,14 @@
                     method: 'get',
                     dataType: 'json'
                 }).done(function(d){         //请求成功 回调函数 d为服务返回的数据
+
+                    //未登录跳转登录
+                    if(d.errno==400001)
+                    {
+                        alert(d.msg)
+                        window.location.href = 'login.html'
+                        return
+                    }
                     //清除定时器
                     clearAllTimers(timers)
                     timers.splice(0,timers.length)

@@ -34,6 +34,7 @@
         <?php
             }
         ?>
+        <a href="prize.html" target="_blank">抽奖</a>
     </div>
     <hr>
     <div id="app">

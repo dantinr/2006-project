@@ -23,7 +23,7 @@ if($data)       //查询到用户
         setcookie('uid',$data['user_id'],time()+86400*7);
 
         //设置session
-        $_SESSION['user_name'] = $data['user_name'];
+        $_SESSION['username'] = $data['user_name'];
         $_SESSION['uid'] = $data['user_id'];
 
         //更新最后登录时间
@@ -32,7 +32,7 @@ if($data)       //查询到用户
         $pdo->exec($sql);
 
         //跳转至 个人中心 my.html
-        header("location:my.html");
+        header("location:index.php");
         exit;
     }
 }
